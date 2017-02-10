@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace WebApplication2.Models
 {
-    public class New
+    public class New 
     {
         public int ID { get; set; }
 

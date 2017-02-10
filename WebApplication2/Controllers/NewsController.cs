@@ -57,6 +57,7 @@ namespace WebApplication2.Controllers
 
         //public ActionResult Create(New FormData)
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Noticia,Fecha,Cliente,Empleado")] New @new)
         {
@@ -70,7 +71,6 @@ namespace WebApplication2.Controllers
 
             return View();
         }
-        [ValidateAntiForgeryToken]
         public ActionResult CreateEmployee([Bind(Include = "ID,Empleado")] New @new)
         {
             if (ModelState.IsValid)

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<WebApplication2.Models.New>
-
+@using System.Linq;
+@using System.Data.Entity;
+@using System;
 @{
     ViewBag.Title = "Index";
 }
@@ -45,8 +47,8 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Noticia)
+            <td contenteditable="true">
+                @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fecha)
