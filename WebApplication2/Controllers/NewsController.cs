@@ -60,7 +60,7 @@ namespace WebApplication2.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Noticia,Fecha,Cliente,Empleado")] New @new)
         {
-            Console.WriteLine(@new);
+            //Console.WriteLine(@new);
             if (ModelState.IsValid)
             {
                 db.News.Add(@new);
