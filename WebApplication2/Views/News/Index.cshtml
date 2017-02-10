@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebApplication2.Models.New>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Vista Empleados</h2>
+
+<form>
+    @Html.ActionLink("Crear nueva noticia", "Create", FormMethod.Get)
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label>Empleado:</label>
+            @Html.DropDownList("empleado", new SelectList(ViewBag.Empleado), string.Empty, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Cliente:</label>
+            @Html.DropDownList("cliente", new SelectList(ViewBag.Cliente), string.Empty, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    }
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Noticia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Empleado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Noticia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+@*<select id="selEmp" class="selectpicker" data-live-search="true" onchange="this.form.submit();">
+        @foreach (var item in Model)
+        {
+        <option>@Html.DisplayFor(modelItem => item.Empleado)</option>
+        }
+    </select>
+    <select class="selectpicker" data-live-search="true">
+        @foreach (var item in Model)
+        {
+            <option>@Html.DisplayFor(modelItem => item.Cliente)</option>
+        }
+    </select>
+
+
+    @foreach (var item in Model)
+    {
+        <div id="tableN">
+            <h4>@Html.DisplayFor(modelItem => item.Noticia)</h4>
+        </div>
+
+    }*@
