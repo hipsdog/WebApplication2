@@ -1,75 +1,96 @@
 ﻿@model IEnumerable<WebApplication2.Models.New>
-@using System.Linq;
-@using System.Data.Entity;
-@using System;
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Goal News";
 }
 
-<h2>Vista Empleados</h2>
+<div class="jumbotron">
 
-<form>
-    @Html.ActionLink("Crear nueva noticia", "Create", FormMethod.Get)
+    <h2 style="text-align:center">Buscar Noticias</h2>
+    @*@Html.ActionLink("Crear nueva noticia", "Create", FormMethod.Get)*@
+
     @using (Html.BeginForm())
-    {
-        <div class="form-group">
-            <label>Empleado:</label>
-            @Html.DropDownList("empleado", new SelectList(ViewBag.Empleado), string.Empty, new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            <label>Cliente:</label>
-            @Html.DropDownList("cliente", new SelectList(ViewBag.Cliente), string.Empty, new { @class = "form-control" })
-        </div>
+            {
+        <div class="container">
+            <div class="form-horizontal">
 
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Buscar</button>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Empleado</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("empleado", new SelectList(ViewBag.Empleado), string.Empty, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Cliente</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("cliente", new SelectList(ViewBag.Cliente), string.Empty, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Fecha</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("Fecha", new SelectList(ViewBag.Fecha), string.Empty, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-size: 0">hidden &zwnj;</label>
+                    <div class="col-md-10">
+                        <button class="form-control btn btn-default" type="submit">Buscar</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
     }
-</form>
+</div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Noticia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cliente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Empleado)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="container">
+    <table class="table">
         <tr>
-            <td contenteditable="true">
-                @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Noticia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empleado)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td contenteditable="true">
+                    @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empleado)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
 
+    </table>
 
+</div>
 
 @*<select id="selEmp" class="selectpicker" data-live-search="true" onchange="this.form.submit();">
         @foreach (var item in Model)

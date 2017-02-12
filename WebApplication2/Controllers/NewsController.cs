@@ -13,6 +13,8 @@ namespace WebApplication2.Controllers
     public class NewsController : Controller
     {
         private NewsDBContext db = new NewsDBContext();
+        private EmployeesDBContext db2 = new EmployeesDBContext();
+
 
         // GET: News
         public ActionResult Index(string empleado, string cliente)
@@ -20,6 +22,7 @@ namespace WebApplication2.Controllers
 
             ViewBag.Empleado = (from r in db.News select r.Empleado).Distinct();
             ViewBag.Cliente = (from r in db.News select r.Cliente).Distinct();
+            ViewBag.Fecha = (from r in db.News select r.Fecha).Distinct();
 
             var news = from m in db.News
                        orderby m.Empleado
@@ -48,6 +51,8 @@ namespace WebApplication2.Controllers
         // GET: News/Create
         public ActionResult Create()
         {
+            ViewBag.Empleado = (from r in db2.Employees select r.Empleado).Distinct();
+            ViewBag.Cliente = (from r in db2.Employees select r.Cliente).Distinct();
             return View();
         }
 
@@ -61,6 +66,9 @@ namespace WebApplication2.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Noticia,Fecha,Cliente,Empleado")] New @new)
         {
+
+
+
             //Console.WriteLine(@new);
             if (ModelState.IsValid)
             {
