@@ -1,56 +1,59 @@
 ﻿@model WebApplication2.Models.New
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Borrar";
 }
 
-<h2>Delete</h2>
+<div class="jumbotron">
+    <div class="container">
+        <h3 style="text-align:center">¿ Estas seguro de que quieres borrar esta noticia ?</h3>
+        <div class="form-group">
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Noticia)
+                </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>New</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Noticia)
-        </dt>
+                <dd>
+                    @Html.Raw(HttpUtility.HtmlDecode(@Model.Noticia))
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Noticia)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Fecha)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Cliente)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Cliente)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Cliente)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Empleado)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Empleado)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Empleado)
+                </dd>
+            </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.Empleado)
-        </dd>
+                <div class="form-actions no-color" style="text-align:center">
 
-    </dl>
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        @Html.ActionLink("Lista de noticas", "Index",null, new { @class = "btn btn-default" })
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+                </div>
+            }
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
         </div>
-    }
+    </div>
 </div>

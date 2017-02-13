@@ -37,8 +37,11 @@
 
                 <div class="form-group">
                     <label class="control-label col-md-2" style="font-size: 0">hidden &zwnj;</label>
-                    <div class="col-md-10">
-                        <button class="form-control btn btn-default" type="submit">Buscar</button>
+                    <div class="col-md-5">
+                        <button class="form-control btn btn-info" type="submit">Buscar</button>
+                    </div>
+                    <div class="col-md-5">
+                        <button id="export" class="form-control btn btn-success">Exportar a Excel</button>
                     </div>
                 </div>
 
@@ -46,7 +49,7 @@
         </div>
     }
 </div>
-<button>Export</button>
+
 <div class="container">
     <table id="table2excel" class="table">
         <thead>
@@ -70,9 +73,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td contenteditable="true">
-                            @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
-                        </td>*@
+                    <td>
+                        @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Fecha)
                     </td>
@@ -82,38 +85,25 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Empleado)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new {  @class= "btn btn-default btn-xs" }) |
+                            @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+                            @Html.ActionLink("Borrar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
+                        </td>}
+
                 </tr>
             }
         </tbody>
     </table>
 </div>
 @section Scripts {
-    <script src="~/scripts/FileSaver/FileSaver.js"></script>
+
     <script src="~/scripts/jquery.table2excel.js"></script>
 
-    <script src="~/scripts/TableExport/src/stable/js/tableexport.js"></script>
-
     <script>
-        /* Defaults */
-        $("table").tableExport({
-            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
-            footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-            formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
-            fileName: "id",                    // (id, String), filename for the downloaded file
-            bootstrap: true,                   // (Boolean), style buttons using bootstrap
-            position: "bottom",                // (top, bottom), position of the caption element relative to table
-            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
-            ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
-            ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
-        });
-
-
-        $("button").click(function () {
+        $("#export").click(function () {
             $("#table2excel").table2excel({
                 // exclude CSS class
                 exclude: ".noExl",
@@ -123,12 +113,7 @@
         });
     </script>
 
-
 }
-
-
-
-
 
 
 

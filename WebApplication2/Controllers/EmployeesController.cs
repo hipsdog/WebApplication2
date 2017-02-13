@@ -15,12 +15,14 @@ namespace WebApplication2.Controllers
         private EmployeesDBContext db = new EmployeesDBContext();
 
         // GET: Employees
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Employees.ToList());
         }
 
         // GET: Employees/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace WebApplication2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "ID,Empleado,Cliente")] Employee employee)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace WebApplication2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "ID,Empleado,Cliente")] Employee employee)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Employees/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +114,7 @@ namespace WebApplication2.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Employee employee = db.Employees.Find(id);

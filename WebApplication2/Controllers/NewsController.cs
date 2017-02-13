@@ -34,8 +34,11 @@ namespace WebApplication2.Controllers
         }
 
         // GET: News/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,6 +52,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: News/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.Empleado = (from r in db2.Employees select r.Empleado).Distinct();
@@ -64,6 +68,7 @@ namespace WebApplication2.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize]
         public ActionResult Create([Bind(Include = "ID,Noticia,Fecha,Cliente,Empleado")] New @new)
         {
 
@@ -92,8 +97,12 @@ namespace WebApplication2.Controllers
         }
 
         // GET: News/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
+            ViewBag.Empleado = (from r in db2.Employees select r.Empleado).Distinct();
+            ViewBag.Cliente = (from r in db2.Employees select r.Cliente).Distinct();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -111,6 +120,7 @@ namespace WebApplication2.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "ID,Noticia,Fecha,Cliente,Empleado")] New @new)
         {
             if (ModelState.IsValid)
@@ -123,6 +133,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: News/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -140,6 +151,7 @@ namespace WebApplication2.Controllers
         // POST: News/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             New @new = db.News.Find(id);
