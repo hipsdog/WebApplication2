@@ -46,53 +46,95 @@
         </div>
     }
 </div>
-
+<button>Export</button>
 <div class="container">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Noticia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table id="table2excel" class="table">
+        <thead>
             <tr>
-                <td contenteditable="true">
-                    @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Noticia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Empleado)
+                </th>
+                <th></th>
             </tr>
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td contenteditable="true">
+                            @Html.Raw(HttpUtility.HtmlDecode(item.Noticia))
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Empleado)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
-
 </div>
+@section Scripts {
+    <script src="~/scripts/FileSaver/FileSaver.js"></script>
+    <script src="~/scripts/jquery.table2excel.js"></script>
 
-@*<select id="selEmp" class="selectpicker" data-live-search="true" onchange="this.form.submit();">
+    <script src="~/scripts/TableExport/src/stable/js/tableexport.js"></script>
+
+    <script>
+        /* Defaults */
+        $("table").tableExport({
+            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+            footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+            formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+            fileName: "id",                    // (id, String), filename for the downloaded file
+            bootstrap: true,                   // (Boolean), style buttons using bootstrap
+            position: "bottom",                // (top, bottom), position of the caption element relative to table
+            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+            ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
+            ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+        });
+
+
+        $("button").click(function () {
+            $("#table2excel").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "ExcelFile" //do not include extension
+            });
+        });
+    </script>
+
+
+}
+
+
+
+
+
+
+
+
+@*
+    <select id="selEmp" class="selectpicker" data-live-search="true" onchange="this.form.submit();">
         @foreach (var item in Model)
         {
         <option>@Html.DisplayFor(modelItem => item.Empleado)</option>
@@ -112,4 +154,5 @@
             <h4>@Html.DisplayFor(modelItem => item.Noticia)</h4>
         </div>
 
-    }*@
+    }
+*@
