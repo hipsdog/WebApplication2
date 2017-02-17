@@ -6,28 +6,16 @@
     <h1></h1>
     <div class="container">
 
-        <div class="col-md-12">
-            <p class="btn btn-default col-md-5">
-                @Html.ActionLink("Añadir Noticia", "Create", "News") &raquo;
-            </p>
+        <div class="col-md-4">
+                @Html.ActionLink("Gestionar Noticias", "Index", "News",null, new { @class="btn btn-info"}) &raquo;
         </div>
 
-        <div class="col-md-12">
-            <p class="btn btn-default col-md-5">
-                @Html.ActionLink("Editar o Eliminar Noticia", "Index", "News") &raquo;
-            </p>
+        <div class="col-md-4">
+                @Html.ActionLink("Gestionar Empleados", "Index", "Employees",null, new { @class = "btn btn-info" }) &raquo;
         </div>
 
-        <div class="col-md-12">
-            <p class="btn btn-default col-md-5">
-                @Html.ActionLink("Añadir Empleado", "Create", "Employees") &raquo;
-            </p>
-        </div>
-
-        <div class="col-md-12">
-            <p class="btn btn-default col-md-5">
-                @Html.ActionLink("Editar o Eliminar Empleado", "Index", "Employees") &raquo;
-            </p>
+        <div class="col-md-4">
+                @Html.ActionLink("Gestionar Clientes", "Index", "Clients",null, new { @class = "btn btn-info" }) &raquo;
         </div>
     </div>
 </div>

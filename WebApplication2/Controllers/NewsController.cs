@@ -14,10 +14,12 @@ namespace WebApplication2.Controllers
     {
         private NewsDBContext db = new NewsDBContext();
         private EmployeesDBContext db2 = new EmployeesDBContext();
+        private ClientsDBContext dbClients = new ClientsDBContext();
+
 
 
         // GET: News
-        public ActionResult Index(string empleado, string cliente)
+        public ActionResult Index(string empleado, string cliente, string fecha)
         {
 
             ViewBag.Empleado = (from r in db.News select r.Empleado).Distinct();
@@ -56,7 +58,7 @@ namespace WebApplication2.Controllers
         public ActionResult Create()
         {
             ViewBag.Empleado = (from r in db2.Employees select r.Empleado).Distinct();
-            ViewBag.Cliente = (from r in db2.Employees select r.Cliente).Distinct();
+            ViewBag.Cliente = (from r in dbClients.Clients select r.Cliente).Distinct();
             return View();
         }
 
@@ -101,7 +103,7 @@ namespace WebApplication2.Controllers
         public ActionResult Edit(int? id)
         {
             ViewBag.Empleado = (from r in db2.Employees select r.Empleado).Distinct();
-            ViewBag.Cliente = (from r in db2.Employees select r.Cliente).Distinct();
+            ViewBag.Cliente = (from r in dbClients.Clients select r.Cliente).Distinct();
 
             if (id == null)
             {

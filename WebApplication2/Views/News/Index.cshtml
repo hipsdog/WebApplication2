@@ -5,14 +5,22 @@
 }
 
 <div class="jumbotron">
+    <div class="container">
+        <h2 style="text-align:center">Buscar Noticias</h2>
 
-    <h2 style="text-align:center">Buscar Noticias</h2>
-    @*@Html.ActionLink("Crear nueva noticia", "Create", FormMethod.Get)*@
-
-    @using (Html.BeginForm())
+        @using (Html.BeginForm())
             {
-        <div class="container">
+
             <div class="form-horizontal">
+                @if (Request.IsAuthenticated)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2" style="font-size: 0">hidden &zwnj;</label>
+                        <div class="col-md-5">
+                            @Html.ActionLink("Crear nueva noticia", "Create", FormMethod.Get, new { @class = "btn btn-success" })
+                        </div>
+                    </div>
+                }
 
                 <div class="form-group">
                     <label class="control-label col-md-2">Empleado</label>
@@ -41,13 +49,13 @@
                         <button class="form-control btn btn-info" type="submit">Buscar</button>
                     </div>
                     <div class="col-md-5">
-                        <button id="export" class="form-control btn btn-success">Exportar a Excel</button>
+                        <button id="export" style="background-color :#256308 !important;" class="form-control btn btn-success">Exportar a Excel</button>
                     </div>
                 </div>
 
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 <div class="container">
@@ -88,8 +96,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new {  @class= "btn btn-default btn-xs" }) |
-                            @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-default btn-xs" }) |
                             @Html.ActionLink("Borrar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
                         </td>}
 
