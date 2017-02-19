@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -17,16 +19,35 @@ namespace WebApplication2.Controllers
         private ClientsDBContext dbClients = new ClientsDBContext();
         private EmpCliDBContext dbEmpCli = new EmpCliDBContext();
 
+
         // GET: Employees
         //[Authorize]
         public ActionResult Index()
         {
-            //var a = (from r in db.Employees select r.Empleado )
-            var query = from Employee in db.Employees join EmpCli in dbEmpCli.EmpClis on Employee.ID equals EmpCli.IDEmp into ca 
-                        from EmpCli in dbEmpCli.EmpClis join Client in dbClients.Clients on EmpCli.IDCli equals Client.ID
-                        select new { Employee , Client} ;
-            //return View(db.Employees.ToList());
-            return View(query.ToList());
+            List<Aux> model = new List<Aux>();
+
+            var Emp = db.Employees.ToList();
+            var ec = dbEmpCli.EmpClis.ToList();
+            var Cli = dbClients.Clients.ToList();
+            var q = from x in Emp.AsEnumerable()
+                    join y in ec.AsEnumerable() on x.ID equals y.IDEmp
+                    join z in Cli.AsEnumerable() on y.IDCli equals z.ID
+                    select new { empA = x, cliA = z };
+
+            foreach (var item in q)
+            {
+                model.Add(new Aux()
+                {
+                    empAux = item.empA.Empleado,
+                    empIdAux = item.empA.ID,
+                    cliAux = item.cliA.Cliente
+                });
+            }
+
+
+            return View(model);
+
+
         }
 
         // GET: Employees/Details/5
@@ -62,11 +83,20 @@ namespace WebApplication2.Controllers
         [Authorize]
         public ActionResult Create([Bind(Include = "ID,Empleado,GetClients")] Employee employee)
         {
+            ViewBag.Cliente = (from r in dbClients.Clients select r.Cliente).Distinct();
+
             EmpCli empCli = new EmpCli();
 
             var aux = employee;
-            int count = employee.GetClients.Count;
-            var gg = aux.GetClients[0];
+            int count = 0;
+            if (employee.GetClients != null)
+            {
+                count = employee.GetClients.Count;
+            }
+            else
+            {
+                return View(employee);
+            }
 
             if (ModelState.IsValid)
             {
@@ -76,11 +106,12 @@ namespace WebApplication2.Controllers
 
             empCli.IDEmp = employee.ID;
 
+
             for (int i = 0; i < count; i++)
             {
 
                 var der = aux.GetClients[i];
-                var a = dbClients.Clients.First(s => s.Cliente == der ).ID;
+                var a = dbClients.Clients.First(s => s.Cliente == der).ID;
                 empCli.IDCli = a;
                 dbEmpCli.EmpClis.Add(empCli);
                 dbEmpCli.SaveChanges();
@@ -91,13 +122,11 @@ namespace WebApplication2.Controllers
                     return RedirectToAction("Index");
 
                 }
+
             }
             return View(employee);
 
         }
-
-
-
 
         // GET: Employees/Edit/5
         [Authorize]

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebApplication2.Models.Employee>
+﻿@*@model IList<WebApplication2.Models.Employee>*@
+
+@model IEnumerable<WebApplication2.Models.Aux>
 
 @{
     ViewBag.Title = "Index";
@@ -8,35 +10,40 @@
     <div class="container">
         <h2 style="text-align:center">Lista de emplados y sus clientes</h2>
         <p>
-            @Html.ActionLink("Añadir empleado", "Create",null, new { @class = "btn btn-success" })
+            @Html.ActionLink("Añadir empleado", "Create", null, new { @class = "btn btn-success" })
         </p>
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Empleado)
+                    Empleado
                 </th>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.Cliente)*@
                     Cliente
                 </th>
-                <th></th>
+                <th>
+                    Opciones
+                </th>
             </tr>
 
-            @foreach (var item in @Model)
+            @foreach (var group in @Model.GroupBy(item => new { item.empIdAux,item.empAux}))
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Empleado)
+                        @group.Key.empAux
                     </td>
                     <td>
-                        @*@Html.DisplayFor(modelItem => item.Cliente)*@
+                        @foreach (var item in group)
+                        {
+                            <div style="margin-bottom:6px">@Html.DisplayFor(modelItem => item.cliAux)</div>
+                        }
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-default btn-xs" }) |
-                        @Html.ActionLink("Borrar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
+                        @Html.ActionLink("Editar", "Edit", new { id = group.Key.empIdAux }, new { @class = "btn btn-default btn-xs" }) |
+                        @Html.ActionLink("Borrar", "Delete", new { id = group.Key.empIdAux }, new { @class = "btn btn-danger btn-xs" })
                     </td>
                 </tr>
             }
+
         </table>
     </div>
 </div>
